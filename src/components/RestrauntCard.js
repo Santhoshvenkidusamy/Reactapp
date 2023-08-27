@@ -1,16 +1,21 @@
+import { useContext } from 'react';
 import {ImageSwiggy} from '../components/constants';
-const RestrauntCard = ({name, cuisines, lastMileTravelString, cloudinaryImageId}) =>{
+import userContext from '../utils/UserContext';
+
+const RestrauntCard = ({name, cuisines, costForTwo, cloudinaryImageId,id}) =>{
+  const {user} = useContext(userContext);
     return(
-      <div className="card">
+      <div className='card rounded-lg p-2 m-2 shadow-lg w-56'>
          <img
           src={
             ImageSwiggy +
             cloudinaryImageId
           }
           />
-  <h1>{name}</h1>
-  <h2>{cuisines.join(", ")}</h2>
-  <h3>{lastMileTravelString} minutes</h3>
+  <h1 className='font-bold'>{name}</h1>
+  <h2>{cuisines?.join(", ")}</h2>
+  <h3>{costForTwo}</h3>
+  <h4>{user?.name}</h4>
       </div>
     )
   }
