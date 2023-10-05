@@ -8,6 +8,7 @@ const RestaurantMenu = () =>{
   const {id} = useParams();
     const menu = useRestrauntMenu(id);
    // const cartdata = useSelector(store=>store.cart.items);
+   console.log(menu);
     const itemCards = menu?.data?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards
     .filter(data => data?.card?.card['@type'] === 'type.googleapis.com/swiggy.presentation.food.v2.ItemCategory')
     .flatMap(data => data?.card?.card?.itemCards?.map(itemData => itemData?.card?.info));
