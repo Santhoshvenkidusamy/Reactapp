@@ -1,13 +1,13 @@
 import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { ImageSwiggy } from "./constants";
+import { ImageSwiggy, appLogo, carouselImage } from "./constants";
 
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 1440 },
-    items: 3,
+    items: 2,
     partialVisibilityGutter: 200,
 
   },
@@ -33,9 +33,10 @@ const responsive = {
   },
 };
 
-const SmallCarosuel = ({data}) => {
+const MenuCarousel = ({data}) => {
+    console.log(data);
   const handleClick = () => {
-    const targetSection = document.getElementById("visible-part");
+    const targetSection = document.getElementById("visible-parts");
     var interval = setInterval(function () {
       var targetSectionCoordinates = targetSection.getBoundingClientRect();
       if (
@@ -49,27 +50,42 @@ const SmallCarosuel = ({data}) => {
     }, 2);
   };
    return (
-    <div className="flex flex-col w-[90%] mx-auto">
-      <div  className="text-2xl font-bold my-4 text-gray-600">
-      What's on your mind?
+    <div className="flex flex-col mx-auto">
+      <div  className="text-2xl font-bold my-4 " style={{color:'#282C3F'}}>
+        Top Picks
       </div>
-      <div className="z-0 h-24">
+      <div className="z-0">
         <Carousel
           responsive={responsive}
           draggable={true}
-          // showDots={true}
+          showDots={true}
           focusOnSelect={true}
-          autoPlay={false}
+          autoPlay={true}
           autoPlaySpeed={3000}
           infinite={true}
           partialVisible={true}
         >
-          {data?.map((item) => {
+         {data[0][0]?.card?.card?.carousel.map((item) => {
             return (
-              <div className='cursor-pointer  ml-14 w-28' key={item?.id} onClick={handleClick}>
-               <img className=" w-28 h-28 " src={ImageSwiggy + item?.imageId} alt="food" />
-               <div style={{ color: "#686B78" }} className="ml-6  text-[16px] font-medium">{item?.action?.text}</div>
-             </div>
+                <div
+                  className="cursor-pointer mr-6"
+                  key={item?.bannerId}
+                  onClick={handleClick}
+                >
+                  <img
+                    className=" rounded-2xl"
+                    src={carouselImage + item?.dish?.info?.imageId}
+                    alt=""
+                  />
+                  <div className=" p-2">
+                    <div className="  text-lg font-bold" style={style.textColor}>
+                      {item?.dish?.info?.category} 
+                    </div>
+                    <div className=" text-sm "style={style.textColor} >
+                      {item?.dish?.info?.description}
+                    </div>
+                  </div>
+                </div>  
             );
           })}
         </Carousel>
@@ -78,4 +94,14 @@ const SmallCarosuel = ({data}) => {
   );
 };
 
-export default SmallCarosuel;
+export default MenuCarousel;
+
+const style = {
+  color: {
+    backgroundColor: "#f1f1f6",
+  },
+  textColor:{
+    color:'#282C3F',
+
+  }
+};

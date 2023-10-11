@@ -2,7 +2,6 @@ import React, { createContext, lazy, Suspense, useContext, useState } from "reac
 import ReactDOM from "react-dom/client";
 import  HeaderComponent  from "./components/Header";
 import  Body  from "./components/Body";
-import  Footer  from "./components/Footer";
 import Contact from "./components/Contact";
 //import About from '../src/components/About'
 import { BrowserRouter, createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
@@ -13,31 +12,21 @@ import Instamart from "./components/Instamart";
 import { Provider } from "react-redux";
 import store from "./utils/store";
 import Cart from "./components/Cart";
-import UserContext from "./utils/UserContext";
-//import RestaurantMenu from "./components/RestrauntMenu";
+import RestaurantMenu from "./components/RestrauntMenu";
+import Footer from "./components/Footer";
 // Composing Comopnentss
 const About = lazy(()=>import('../src/components/About'))
-const RestaurantMenu = lazy(()=>import('./components/RestrauntMenu'))
+// const RestaurantMenu = lazy(()=>import('./components/RestrauntMenu'))
 const App = () => {
-  const[user,setUser]=useState({
-    name:'demo',
-    email:'santhosh.v@gmail.com',
-});
-  //const userContext = createContext(UserContext);
   return (
     <Provider store={store}>
-      <UserContext.Provider value={{
-        user:user,
-        setUser:setUser,
-      }}
-      >
       <HeaderComponent/>
       <Outlet/>
-      <Footer />
-      </UserContext.Provider>
+      {/* <Footer /> */}
     </Provider>
   );
 };
+
 
 const appRouter = createBrowserRouter([
   {
@@ -46,7 +35,7 @@ const appRouter = createBrowserRouter([
     errorElement:<ErrorPage />,
     children:[
       {
-        path:'/',
+        path:'',
         element:<Body />,
       },
       {
@@ -72,8 +61,8 @@ const appRouter = createBrowserRouter([
         element:<Cart />,
       },
       {
-        path:'/restraunt/:id',
-        element:<Suspense fallback={<Shimmer />}><RestaurantMenu/></Suspense>,
+        path:'restaurant/:id',
+        element:<RestaurantMenu/>,
       },
     ],
   },
@@ -81,3 +70,4 @@ const appRouter = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(<RouterProvider router={appRouter} />);
+

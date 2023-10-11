@@ -2,12 +2,15 @@ import React from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { ImageSwiggy } from "./constants";
+import RestrauntCard from "./RestrauntCard";
+import { Link } from "react-router-dom";
+import OnlineRestrauntCard from "./OnlineRestrauntCard";
 
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 1440 },
-    items: 3,
+    items: 2,
     partialVisibilityGutter: 200,
 
   },
@@ -33,49 +36,36 @@ const responsive = {
   },
 };
 
-const SmallCarosuel = ({data}) => {
-  const handleClick = () => {
-    const targetSection = document.getElementById("visible-part");
-    var interval = setInterval(function () {
-      var targetSectionCoordinates = targetSection.getBoundingClientRect();
-      if (
-        targetSectionCoordinates.top >= 0 &&
-        targetSectionCoordinates.top <= 20
-      ) {
-        clearInterval(interval);
-        return;
-      }
-      window.scrollBy(0, 5);
-    }, 2);
-  };
+const OnlineCarousal = ({data}) => {
    return (
+    <>
     <div className="flex flex-col w-[90%] mx-auto">
-      <div  className="text-2xl font-bold my-4 text-gray-600">
-      What's on your mind?
+      <div  className="text-2xl font-bold my-8 text-gray-600">
+      Restaurants with online food delivery 
       </div>
-      <div className="z-0 h-24">
+      <div className="z-0">
         <Carousel
           responsive={responsive}
           draggable={true}
-          // showDots={true}
+          showDots={true}
           focusOnSelect={true}
-          autoPlay={false}
+          autoPlay={true}
           autoPlaySpeed={3000}
           infinite={true}
           partialVisible={true}
         >
           {data?.map((item) => {
             return (
-              <div className='cursor-pointer  ml-14 w-28' key={item?.id} onClick={handleClick}>
-               <img className=" w-28 h-28 " src={ImageSwiggy + item?.imageId} alt="food" />
-               <div style={{ color: "#686B78" }} className="ml-6  text-[16px] font-medium">{item?.action?.text}</div>
-             </div>
+                <Link to={`restaurant/${item?.info?.id}`}>
+                <OnlineRestrauntCard {...item?.info} key={item?.info?.id} />
+              </Link>
             );
           })}
         </Carousel>
       </div>
     </div>
+    </>
   );
 };
 
-export default SmallCarosuel;
+export default OnlineCarousal;

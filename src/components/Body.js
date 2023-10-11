@@ -1,10 +1,13 @@
 import RestrauntCard from '../components/RestrauntCard';
 import {useEffect, useState} from 'react';
-import Shimmer from './Shimmer';
 import { Link } from 'react-router-dom';
 import Carousell from './Carousal';
 import SmallCarosuel from './SmallCarousel';
-
+import HomeFooter from './HomeFooter';
+import OnlineCarousal from './onlineCarousal';
+import Spin from './Spin';
+import Shimmer from './Shimmer';
+import Footer from './Footer';
 const Body = () => {
   useEffect(() => {
     // API call
@@ -12,6 +15,7 @@ const Body = () => {
   }, []);
 
   const getRestaurants = async () => {
+    setLoading(true);
     const data = await fetch(
       "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
     );
@@ -29,40 +33,52 @@ const Body = () => {
       if(items.card.card.id === "whats_on_your_mind"){
         setSmallCarousel(items?.card?.card?.gridElements?.infoWithStyle?.info)
       }
+      if(items.card.card.id === "restaurant_grid_listing")
+      {
+        setOnlineDelivery(items?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      }
+      if(items.card.card.id === "app_install_links")
+      {
+        setAppInfo(items?.card?.card);
+      }
     });
+    setLoading(false);
   };
 
   const [search, setSearch] = useState('');
+  const [appInfo, setAppInfo] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [onlineDelivery, setOnlineDelivery] = useState([]);
   const [restaurant, setRestaurant] = useState([]);
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [carousel, setCarousel] = useState([]);
   const [smallCarousel, setSmallCarousel] = useState([]);
-  // console.log(carousel.length > 0);
-  // console.log(Array.isArray(carousel)); 
+  console.log(onlineDelivery);
 
-  const Filters = (e) => {
-    setSearch(e.target.value);
-    if (e.target.value) {
-      const filters = restaurant?.filter((restaurant) =>
-        restaurant?.info?.name?.toLowerCase()?.includes(search.toLowerCase())
-      );
-      return setFilteredRestaurant(filters);
-    } else {
-      setFilteredRestaurant(restaurant);
-    }
-  };
+  // const Filters = (e) => {
+  //   setSearch(e.target.value);
+  //   if (e.target.value) {
+  //     const filters = restaurant?.filter((restaurant) =>
+  //       restaurant?.info?.name?.toLowerCase()?.includes(search.toLowerCase())
+  //     );
+  //     return setFilteredRestaurant(filters);
+  //   } else {
+  //     setFilteredRestaurant(restaurant);
+  //   }
+  // };
 
   return (
-    <>
-      {restaurant?.length === 0 ? (
-        <Shimmer />
-      ) : (
+        loading ? [<Spin />,<Shimmer />] :
         <div className=''>
           <div className='m-4 mt-10'>
           { carousel.length > 0 &&(
             <Carousell data={carousel}/>)}
+            <div className="mt-20 border"></div>
             { smallCarousel.length > 0 &&(
             <SmallCarosuel data={smallCarousel}/>)}
+            <div className="mt-20 border"></div>
+             { onlineDelivery.length > 0 &&(
+            <OnlineCarousal data={onlineDelivery}/>)}
            <div className="flex justify-center mt-20" id="visible-part">
         <div className="flex flex-col justify-center w-[90%] ">
           <div className="flex justify-between items-center ">
@@ -176,21 +192,22 @@ const Body = () => {
           {filteredRestaurant?.length === 0 ? (
             <div>No results</div>
           ) : (
-            <div className='flex flex-wrap  justify-center h-52'>
+            <div className='flex flex-wrap justify-center'>
               {filteredRestaurant?.map((restaurant) => {
                 return (
                   <div id="visible-part" className='m-1'>
-                    <Link to={'/restaurant/' + restaurant?.info?.id}>
+                    <Link to={`restaurant/${restaurant?.info?.id}`}>
                       <RestrauntCard {...restaurant?.info} key={restaurant?.info?.id} />
                     </Link>
                   </div>
                 );
               })}
-            </div>
+              </div>
           )}
+           {/* <div className='border my-4'></div> */}
+          <HomeFooter appInfo={appInfo}/>
+          <Footer />
         </div>
-      )}
-    </>
   );
 };
 

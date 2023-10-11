@@ -1,9 +1,9 @@
 
 import {ImageSwiggy} from '../components/constants';
 import star from '../Images/star.png'
-const RestrauntCard = ({name, cuisines, costForTwo, cloudinaryImageId,avgRating,sla}) =>{
+const OnlineRestrauntCard = ({name, cuisines, costForTwo, cloudinaryImageId,avgRating,sla}) =>{
     return(
-      <div className='p-1 m-1 w-72'>
+      <div className='w-72'>
          <img
          className='rounded-lg'
           src={
@@ -41,4 +41,4 @@ const RestrauntCard = ({name, cuisines, costForTwo, cloudinaryImageId,avgRating,
     )
   }
 
-export default RestrauntCard;
+export default OnlineRestrauntCard;
