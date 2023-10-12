@@ -4,42 +4,41 @@ const cartSlice = createSlice({
     name:'cart',
     initialState:{
         items:[],
-        totalItemsCount: 0,
     },
     reducers:{
-        addItem: (state, action) => {
-            const existingItem = state.items.find(
-              (item) => item.id === action.payload.id
-            );
-            if (existingItem) {
-              existingItem.quantity++;
-              state.totalItemsCount = state.totalItemsCount + 1;
-            } else {
-              state.items.push({ ...action.payload, quantity: 1 });
-              state.totalItemsCount = state.totalItemsCount + 1;
-            }
-          },
-        removeItem: (state,action)=>{
-          const existingItem = state.items.find(
-            (item) => item.id === action.payload
-          );
-          if (existingItem) {
-            if (existingItem.quantity === 1) {
-              state.items = state.items.filter(
-                (item) => item.id !== action.payload
-              );
-              state.totalItemsCount = 0;
-            } else {
-              existingItem.quantity--;
-              state.totalItemsCount = state.totalItemsCount - 1;
-            }
-          }
-        },
-        clearCart: (state,action)=>{
-            state.items=[];
+      addItem: (state, action) => {
+        // const itemIndex = state.items.findIndex(
+        //   (item) => item.card.info.id === action.payload.card.info.id
+        // );
+        // if (itemIndex < 0) {
+          state.items.push(action.payload);
+        // } else {
+        //   state.items[itemIndex].inStock = state.items[itemIndex].inStock + 1;
+        // }
+      },
+      removeItem: (state) => {
+        state.items.pop();
+      },
+      clearCart: (state) => {
+        state.items.length = 0;
+      },
+      increaseQuantity: (state, action) => {
+        const item = state.items.find(
+          (element) => element.card.info.id === action.payload
+        );
+        item.inStock = item.inStock + 1;
+      },
+      decreaseQuantity: (state, action) => {
+        const item = state.items.find(
+          (element) => element.card.info.id === action.payload
+        );
+        item.inStock = item.inStock - 1;
+        if (item.inStock === 0) {
+          const index = state.items.findIndex((el) => el.inStock === 0);
+          state.items.splice(index, 1);
         }
-
-    }
+      },
+    },
 });
-export const {addItem, removeItem, clearCart} = cartSlice.actions;
+export const {addItem, removeItem, clearCart, increaseQuantity, decreaseQuantity} = cartSlice.actions;
 export default cartSlice.reducer;

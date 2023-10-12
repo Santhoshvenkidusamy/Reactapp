@@ -21,11 +21,21 @@ const Body = () => {
     );
     const json = await data.json();
     console.log(json);
-    // Optional Chaining
+  const relevantData = json.data.cards.find(
+    (items) =>
+      items?.card?.card?.id === 'top_brands_for_you' ||
+      items?.card?.card?.id === 'restaurant_grid_listing'
+  );
+
     json.data.cards.map((items) => {
-      if (items.card.card.id === 'top_brands_for_you') {
-        setRestaurant(items?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredRestaurant(items?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+      if (relevantData) {
+        if (relevantData.card.card.id === 'top_brands_for_you') {
+          setRestaurant(relevantData?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+          setFilteredRestaurant(relevantData?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        } else if (relevantData.card.card.id === 'restaurant_grid_listing') {
+          setRestaurant(relevantData?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+          setFilteredRestaurant(relevantData?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        }
       }
       if(items.card.card.id === 'topical_banner'){
         setCarousel(items?.card?.card?.gridElements?.infoWithStyle?.info)
@@ -53,7 +63,7 @@ const Body = () => {
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [carousel, setCarousel] = useState([]);
   const [smallCarousel, setSmallCarousel] = useState([]);
-  console.log(onlineDelivery);
+  console.log(filteredRestaurant);
 
   // const Filters = (e) => {
   //   setSearch(e.target.value);
@@ -189,13 +199,10 @@ const Body = () => {
               </button>
             </div> */}
           </div>
-          {filteredRestaurant?.length === 0 ? (
-            <div>No results</div>
-          ) : (
             <div className='flex flex-wrap justify-center'>
               {filteredRestaurant?.map((restaurant) => {
                 return (
-                  <div id="visible-part" className='m-1'>
+                  <div id="visible-part" className='m-1' key={restaurant?.info?.id}>
                     <Link to={`restaurant/${restaurant?.info?.id}`}>
                       <RestrauntCard {...restaurant?.info} key={restaurant?.info?.id} />
                     </Link>
@@ -203,7 +210,6 @@ const Body = () => {
                 );
               })}
               </div>
-          )}
            {/* <div className='border my-4'></div> */}
           <HomeFooter appInfo={appInfo}/>
           <Footer />

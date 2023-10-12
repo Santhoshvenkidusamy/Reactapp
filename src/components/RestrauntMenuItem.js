@@ -1,6 +1,6 @@
-import {  useState } from "react"
-import { useDispatch } from "react-redux";
-import { addItem, removeItem} from '../utils/cartSlice';
+import {  useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { addItem, decreaseQuantity, increaseQuantity, removeItem} from '../utils/cartSlice';
 
 const style = {
   color: {
@@ -12,21 +12,24 @@ const style = {
   }
 };
 const RestaurantMenuItem = ({data}) =>{
-   console.log(data);
-    const [itemCount, setItemCount] = useState(0);
-    const dispatch = useDispatch();
-    const handleClick = (item) => {
-        dispatch(addItem(item)); // redux send action object to store {payload : item}
-        setItemCount(itemCount + 1);
-      };
-      
-      const handleRemove = (id) => {
-        let updatedCount;
-        dispatch(removeItem(id));
-        updatedCount = itemCount > 0 ? itemCount - 1 : 0;
-        setItemCount(updatedCount);
-      }
+  const [isAdded, setIsAdded] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+  const cartItems = useSelector((store) => store.cart.items);
 
+  useEffect(() => {
+    const isPresentAt = cartItems.findIndex(
+      (el) => el.card.info.id === data.card.info.id
+    );
+    setIsAdded(isPresentAt >= 0);
+    setQuantity(cartItems?.[isPresentAt]?.inStock);
+  }, [cartItems]);
+
+  const dispatch = useDispatch();
+  // Dispatch an action
+  const handleAddItem = (item) => {
+    console.log(item);
+    dispatch(addItem({ ...item, inStock: 1 }));
+  };
     return(
         <div className='my-4 mx-2' style={style.textColor}>
             <div className="flex justify-between items-center">
@@ -47,16 +50,37 @@ const RestaurantMenuItem = ({data}) =>{
               : data?.card?.info?.defaultPrice / 100}</div>
           <div className="text-sm text-gray-500 mt-4">{ data?.card?.info?.description}</div>
           </div>
-          <div>
+          <div className="relative">
+            {data?.card?.info?.imageId?
           <img className="h-24 rounded-lg"
                 src={
                     "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" +
                     data?.card?.info?.imageId
                 }
             />
-          {/* <button className='bg-green-300 rounded-md mx-2 text-2xl' onClick={(()=>handleClick(data?.card))}>+</button>
-          <div className="mx-1 text-2xl">{itemCount}</div>
-          <button className='bg-blue-300 rounded-md mx-2 text-2xl' onClick={(()=>handleRemove(data?.id))}>-</button> */}
+            :
+            <img
+              className="h-24 rounded-lg"
+              src={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill//e7f40335a66b230f5eda766022dfecbd"}
+              alt="item"
+            />
+              }
+              <div className="absolute z-10 top-20 ml-9">
+                {isAdded && quantity?
+              <div className=" flex justify-between w-[78px] bg-white border shadow-2xl text-green-600 font-semibold rounded-md">
+              <button className='w-6' onClick={()=>dispatch(decreaseQuantity(data.card.info.id))}>-</button>
+          <div>{quantity}</div>
+          <button className='w-6' onClick={()=>dispatch(increaseQuantity(data.card.info.id))}>+</button>
+          </div>
+          :(
+            <button
+                className="p-0 w-20 sm:w-20 rounded-lg bg-white border shadow-2xl text-green-600 font-semibold"
+                onClick={()=>handleAddItem(data)}
+              >
+                ADD+
+              </button>
+          )}
+          </div>
           </div>
           </div>
           </div>

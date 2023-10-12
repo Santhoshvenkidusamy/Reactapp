@@ -71,15 +71,6 @@ const Carousell = ({data}) => {
              </div>
             );
           })}
-            {/* <div onClick={handleClick}>
-            <img className="w-[27rem] h-64" src={ImageSwiggy+'rng/md/carousel/production/a9a6993c0a897063e0614ee2c560ac3e'} alt="" />
-            </div>
-            <div onClick={handleClick}>
-            <img className="w-[27rem] h-64" src={ImageSwiggy+'rng/md/carousel/production/a9a6993c0a897063e0614ee2c560ac3e'} alt="" />
-            </div>
-            <div onClick={handleClick}>
-            <img className="w-[27rem] h-64" src={ImageSwiggy+'rng/md/carousel/production/a9a6993c0a897063e0614ee2c560ac3e'} alt="" />
-            </div> */}
         </Carousel>
       </div>
     </div>
