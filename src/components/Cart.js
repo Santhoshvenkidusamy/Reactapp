@@ -138,7 +138,7 @@ const Cart = () => {
                         style={{ color: "#ffffff" }}
                         className="text-[13px] w-28"
                       >
-                        New to Swiggy?
+                        New to Foody?
                       </p>
                       <h1
                         style={{ color: "#ffffff" }}

@@ -5,10 +5,14 @@ import linkedin from "../Images/linkedin.png";
 import instagram from "../Images/instagram.png";
 import github from "../Images/github.png";
 import globe from "../Images/globe.png";
-
+const style = {
+  color: {
+    backgroundColor: "#282c3f",
+  },
+};
 const Footer = () => {
   return (
-    <div className="bg-black text-white p-10">
+    <div className=" text-white p-10" style={style.color}> 
       <div className="flex flex-wrap justify-around">
         <div className="flex flex-col">
           <div className="flex items-center">
