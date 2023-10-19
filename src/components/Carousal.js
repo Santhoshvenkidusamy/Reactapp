@@ -50,7 +50,7 @@ const Carousell = ({data}) => {
   };
    return (
     <div className="flex flex-col w-[90%] mx-auto">
-      <div  className="text-2xl font-bold my-4 text-gray-600">
+      <div  className="text-2xl font-bold my-4 " style={{ color: "#020609eb" }}>
         Best offers for you
       </div>
       <div className="z-0">

@@ -2,15 +2,44 @@ import { Link, NavLink } from "react-router-dom";
 import appLogo from '../Images/logo.svg';
 import  Offer  from "../Images/offers.svg";
 import  Search  from "../Images/search.svg";
+import cart from "../Images/cart2.svg";
 import  SignIn  from "../Images/signin.svg";
-// import { ReactComponent as SignIn } from "../Images/signin.svg";
 import  EmptyCart  from "../Images/cart.svg";
 import  NonEmptyCart  from "../Images/cart2.svg";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
+const useLocalStorage = (key) => {
+  const [data, setData] = useState(localStorage.getItem(key));
+
+  useEffect(() => {
+    const handleStorageChange = (e) => {
+      if (e.key === key) {
+        setData(e.newValue);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, [key]);
+
+  return data;
+}
 const Header =() =>{
-  // const {user} = useContext(userContext);
+ 
+  
+    const user = JSON.parse(useLocalStorage('user'))
+     const loggedIn = useLocalStorage('login')
+  
   const cartItems = useSelector(store =>store.cart.items);
-  const totalItems = useSelector(store =>store.cart);
+  // const totalItems = useSelector(store =>store.cart);
+  const length = cartItems.reduce((acc, curr) => {
+    acc = acc + curr.inStock;
+    return acc;
+  }, 0);
     return(
     <div className='flex justify-between shadow-lg w-full sticky top-0 z-20 bg-white'>
       <Link to='/'>
@@ -19,32 +48,42 @@ const Header =() =>{
     <div style={{ color: "#3D4152" }}
         className="flex items-center text-base font-medium">
       <ul className='flex py-6'>
-      <li className='px-2 flex flex-row items-center'>
-      <Link to='/'>
+      <li className='px-4 flex flex-row items-center'>
+      <Link to='/search'>
         <div className='flex items-center'>
-          <img src={Search} alt='Offer' />
+          <img src={Search} alt='Search' />
           <span className="ml-3">Search</span>
         </div>
       </Link>
       </li>
-      <li className='px-2 flex flex-row items-center'>
+      <li className='px-4 flex flex-row items-center'>
       <Link to='/offers'>
         <div className='flex items-center'>
-          <img src={Offer} alt='Offer' />
+          <img src={Offer} alt='Offer' className="svg-class" />
           <span className="ml-3">Offer</span>
         </div>
       </Link>
       </li>
-      <li className='px-2 flex flex-row items-center'>
-      <Link to='/'>
+      <li className='px-4 flex flex-row items-center'>
+  {loggedIn?
+      <Link to='/profile'>
         <div className='flex items-center'>
-          <img src={SignIn} alt='Offer' />
-          <span className="ml-3">Santhosh</span>
+          <img src={SignIn} alt='Signin' />
+          <span className="ml-3">{user.name}</span>
         </div>
       </Link>
+      :
+      <Link to='/login'>
+         <div className='flex items-center'>
+          <img src={SignIn} alt='Signin' />
+          <span className="ml-3">Login</span>
+        </div>
+      </Link>
+}
       </li>
-      <li className='px-2 flex flex-row items-center'>
+      <li className='px-4 flex flex-row items-center'>
       <Link to='/cart'>
+      {length === 0 ?
         <div className='flex items-center'>
           <img src={EmptyCart} alt='Offer' />
           <span className="ml-3">Cart</span>
@@ -55,6 +94,18 @@ const Header =() =>{
                     0
                   </span>
         </div>
+        :
+        <div className='flex items-center'>
+          <img src={cart} alt='Offer' />
+          <span className="ml-3">Cart</span>
+          <span
+                    // style={{ color: "#686b78" }}
+                    className="flex justify-center items-center min-w-[18px]  text-sm text-center  relative -top-[1.5px] right-[62px]"
+                  >
+                    {length}
+                  </span>
+        </div>
+}
       </Link>
       </li>
 

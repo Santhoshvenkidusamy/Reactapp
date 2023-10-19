@@ -46,7 +46,7 @@ return(
               {restaurant?.map((restaurant) => {
                 return (
                   <div id="visible-part" className='m-1' key={restaurant?.info?.id}>
-                    <Link to={`restaurant/${restaurant?.info?.id}`}>
+                    <Link to={`/restaurant/${restaurant?.info?.id}`}>
                       <OffersCard {...restaurant?.info} key={restaurant?.info?.id} />
                     </Link>
                   </div>

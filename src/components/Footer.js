@@ -7,7 +7,7 @@ import github from "../Images/github.png";
 import globe from "../Images/globe.png";
 const style = {
   color: {
-    backgroundColor: "#282c3f",
+    backgroundColor: "#02060C",
   },
 };
 const Footer = () => {

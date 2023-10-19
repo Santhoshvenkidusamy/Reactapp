@@ -1,7 +1,7 @@
 import React from 'react'
 const style = {
     color: {
-      backgroundColor: "#282c3f",
+      backgroundColor: "#02060C",
     },
   };
 const Spin = () => {

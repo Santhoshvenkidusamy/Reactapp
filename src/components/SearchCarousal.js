@@ -33,25 +33,13 @@ const responsive = {
   },
 };
 
-const SmallCarosuel = ({data}) => {
-  const handleClick = () => {
-    const targetSection = document.getElementById("visible-part");
-    var interval = setInterval(function () {
-      var targetSectionCoordinates = targetSection.getBoundingClientRect();
-      if (
-        targetSectionCoordinates.top >= 0 &&
-        targetSectionCoordinates.top <= 20
-      ) {
-        clearInterval(interval);
-        return;
-      }
-      window.scrollBy(0, 5);
-    }, 2);
-  };
+const SearchCarosuel = ({data, setValue}) => {
+ 
+  
    return (
-    <div className="flex flex-col w-[90%] mx-auto">
-      <div  className="text-2xl font-bold my-4 " style={{ color: "#020609eb" }}>
-      What's on your mind?
+    <div className="flex flex-col mt-4">
+        <div  className="text-2xl font-bold my-4 " style={{color:'#3d4152'}}>
+      Popular cuisines
       </div>
       <div className="z-0 h-24">
         <Carousel
@@ -66,9 +54,8 @@ const SmallCarosuel = ({data}) => {
         >
           {data?.map((item) => {
             return (
-              <div className='cursor-pointer  ml-14 w-28' key={item?.id} onClick={handleClick}>
+              <div className='cursor-pointer  ml-14 w-28' key={item?.id} onClick={()=>setValue(item?.action?.text)}>
                <img className="  " src={'https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/'+ item?.imageId} alt="food" />
-               {/* <div style={{ color: "#686B78" }} className="ml-6  text-[16px] font-medium">{item?.action?.text}</div> */}
              </div>
             );
           })}
@@ -78,4 +65,4 @@ const SmallCarosuel = ({data}) => {
   );
 };
 
-export default SmallCarosuel;
+export default SearchCarosuel;

@@ -9,19 +9,19 @@ import OnlineRestrauntCard from "./OnlineRestrauntCard";
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 1440 },
-    items: 2,
+    breakpoint: { max: 3000, min: 1440 },
+    items: 4,
     partialVisibilityGutter: 200,
 
   },
   desktop: {
     breakpoint: { max: 1439, min: 1261 },
-    items: 2,
+    items: 3,
     partialVisibilityGutter: 120,
   },
   large: {
-    breakpoint: { max: 1260, min: 1181 },
-    items: 2,
+    breakpoint: { max: 2000, min: 1181 },
+    items: 3,
     partialVisibilityGutter: 80,
   },
   mobile: {
@@ -40,7 +40,7 @@ const OnlineCarousal = ({data}) => {
    return (
     <>
     <div className="flex flex-col w-[90%] mx-auto">
-      <div  className="text-2xl font-bold my-8 text-gray-600">
+      <div  className="text-2xl font-bold my-8 " style={{ color: "#020609eb" }}>
       Restaurants with online food delivery 
       </div>
       <div className="z-0">

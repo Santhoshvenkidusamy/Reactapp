@@ -63,19 +63,7 @@ const Body = () => {
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [carousel, setCarousel] = useState([]);
   const [smallCarousel, setSmallCarousel] = useState([]);
-  console.log(filteredRestaurant);
-
-  // const Filters = (e) => {
-  //   setSearch(e.target.value);
-  //   if (e.target.value) {
-  //     const filters = restaurant?.filter((restaurant) =>
-  //       restaurant?.info?.name?.toLowerCase()?.includes(search.toLowerCase())
-  //     );
-  //     return setFilteredRestaurant(filters);
-  //   } else {
-  //     setFilteredRestaurant(restaurant);
-  //   }
-  // };
+  // console.log(filteredRestaurant);
 
   return (
         loading ? [<Spin />,<Shimmer />] :
@@ -83,10 +71,10 @@ const Body = () => {
           <div className='m-4 mt-10'>
           { carousel.length > 0 &&(
             <Carousell data={carousel}/>)}
-            <div className="mt-20 border"></div>
+            <div className="mt-20 border mx-10"></div>
             { smallCarousel.length > 0 &&(
             <SmallCarosuel data={smallCarousel}/>)}
-            <div className="mt-20 border"></div>
+            <div className="mt-20 border mx-10"></div>
              { onlineDelivery.length > 0 &&(
             <OnlineCarousal data={onlineDelivery}/>)}
            <div className="flex justify-center mt-20" id="visible-part">
@@ -94,7 +82,7 @@ const Body = () => {
           <div className="flex justify-between items-center ">
             <div>
               <div
-                style={{ color: "#282C3F" }}
+                style={{ color: "#020609eb" }}
                 className="font-bold text-[28px] flex"
               >
                 <p>Top Restaurants</p>

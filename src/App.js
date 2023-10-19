@@ -12,15 +12,22 @@ import Cart from "./components/Cart";
 import RestaurantMenu from "./components/RestrauntMenu";
 import Header from "./components/Header";
 import Offers from "./components/Offers";
+import Search from "./components/Search";
+import Login from "./components/Login";
+import SignIn from "./components/SignIn";
+import { ToastContainer } from "react-toastify";
 
 const About = lazy(()=>import('../src/components/About'))
 const App = () => {
   return (
+    <>
     <Provider store={store}>
       <Header/>
       <Outlet/>
       {/* <Footer /> */}
     </Provider>
+    <ToastContainer />
+    </>
   );
 };
 
@@ -64,6 +71,18 @@ const appRouter = createBrowserRouter([
       {
         path:'restaurant/:id',
         element:<RestaurantMenu/>,
+      },
+      {
+        path:'search',
+        element:<Search/>,
+      },
+      {
+        path:'login',
+        element:<Login/>,
+      },
+      {
+        path:'signin',
+        element:<SignIn/>,
       },
     ],
   },
