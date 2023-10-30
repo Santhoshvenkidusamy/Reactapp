@@ -16,6 +16,7 @@ import Search from "./components/Search";
 import Login from "./components/Login";
 import SignIn from "./components/SignIn";
 import { ToastContainer } from "react-toastify";
+import Congrats from "./components/Congrats";
 
 const About = lazy(()=>import('../src/components/About'))
 const App = () => {
@@ -84,6 +85,11 @@ const appRouter = createBrowserRouter([
         path:'signin',
         element:<SignIn/>,
       },
+      {
+        path:'success',
+        element:<Congrats/>,
+      },
+      
     ],
   },
 ])

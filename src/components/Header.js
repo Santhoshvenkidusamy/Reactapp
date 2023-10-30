@@ -8,31 +8,14 @@ import  EmptyCart  from "../Images/cart.svg";
 import  NonEmptyCart  from "../Images/cart2.svg";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import store from "../utils/store";
 
-const useLocalStorage = (key) => {
-  const [data, setData] = useState(localStorage.getItem(key));
 
-  useEffect(() => {
-    const handleStorageChange = (e) => {
-      if (e.key === key) {
-        setData(e.newValue);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, [key]);
-
-  return data;
-}
 const Header =() =>{
  
-  
-    const user = JSON.parse(useLocalStorage('user'))
-     const loggedIn = useLocalStorage('login')
+    const userData = useSelector((store) => store.user.items[0])
+     const user = JSON.parse(localStorage.getItem('user'))
+     const loggedIn = JSON.parse(localStorage.getItem('login'))
   
   const cartItems = useSelector(store =>store.cart.items);
   // const totalItems = useSelector(store =>store.cart);
@@ -65,11 +48,11 @@ const Header =() =>{
       </Link>
       </li>
       <li className='px-4 flex flex-row items-center'>
-  {loggedIn?
+  {loggedIn || userData?.loggedIn?
       <Link to='/profile'>
         <div className='flex items-center'>
           <img src={SignIn} alt='Signin' />
-          <span className="ml-3">{user.name}</span>
+          <span className="ml-3">{userData?userData?.name:user?.name}</span>
         </div>
       </Link>
       :

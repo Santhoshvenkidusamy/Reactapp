@@ -12,12 +12,9 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userDetails = {
-    isLoggedIn: false,
-    name: 'Santhosh',
-    email:'santhosh@gmail.com',
-    address: '1234',
-  }
+  const userData = useSelector((store) => store.user.items[0])
+  const user = JSON.parse(localStorage.getItem('user'))
+  const loggedIn = JSON.parse(localStorage.getItem('login'))
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
@@ -90,7 +87,7 @@ const Cart = () => {
       <div className="flex flex-col md:flex-row md:justify-between md:p-4 lg:p-8">
         {/* left section - account details */}
         <div className=" flex flex-col  md:w-[55%] md:h-auto lg:w-[67%] lg:h-auto">
-          {userDetails.isLoggedIn ? (
+          {userData?.loggedIn || loggedIn ? (
             <div className="bg-white p-10 mb-3">
               <div style={{ color: "#282C3F" }} className="text-lg font-bold">
                 Logged in &nbsp; &nbsp; ✅
@@ -99,7 +96,7 @@ const Cart = () => {
                 style={{ color: "#282C3F" }}
                 className="text-lg font-medium mt-4"
               >
-                {userDetails.name}
+                {userData?userData?.name:user?.name}
               </div>
             </div>
           ) : (
@@ -152,7 +149,7 @@ const Cart = () => {
               </div>
             </div>
           )}
-          {userDetails.isLoggedIn ? (
+          {userData?.loggedIn || loggedIn ?(
             <div className="bg-white p-10 mb-3">
               <div style={{ color: "#282C3F" }} className="text-lg font-bold">
                 Select delivery address
@@ -179,7 +176,7 @@ const Cart = () => {
                     Home
                   </div>
                   <div style={{ color: "#93959F" }} className="text-sm my-4">
-                    {userDetails.address}
+                    {userData?userData.address:user?.address}
                   </div>
                   {tick ? (
                     <div className="flex items-center">
@@ -213,7 +210,7 @@ const Cart = () => {
           )}
 
           <div className="bg-white p-10 mb-3">
-            {userDetails.isLoggedIn ? (
+          {userData?.loggedIn || loggedIn ?(
               <h1 style={{ color: "#93959F" }} className="text-lg font-bold">
                 Payment &nbsp; ✅
               </h1>
@@ -410,9 +407,9 @@ const Cart = () => {
           </div>
           {/* Proceed to pay */}
           <div className="flex justify-end">
-            {userDetails.isLoggedIn ? (
+          {userData?.loggedIn || loggedIn ?(
               <Link
-                to="/order/success"
+                to="/success"
                 style={{ backgroundColor: "#7BBB64" }}
                 onClick={() => dispatch(clearCart())}
                 className="p-3 font-bold text-md text-white w-[100%] text-center"

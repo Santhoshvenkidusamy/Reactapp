@@ -1,9 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import { addUser } from '../utils/userSlice';
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const user = JSON.parse(localStorage.getItem('user'))
@@ -22,6 +25,9 @@ const Login = () => {
     toast.success('Login Successfull')
     navigate('/cart');
     localStorage.setItem('login',true);
+    const user = JSON.parse(localStorage.getItem('user'))
+    const loggedIn = JSON.parse(localStorage.getItem('login'))
+    dispatch(addUser({...user,loggedIn}))
    }
    else{
     toast.error('Something Went Wrong. Please Sign Up again!')
