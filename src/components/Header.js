@@ -35,7 +35,7 @@ const Header =() =>{
       <Link to='/search'>
         <div className='flex items-center'>
           <img src={Search} alt='Search' />
-          <span className="ml-3">Search</span>
+          <span className="ml-3  hidden md:block ">Search</span>
         </div>
       </Link>
       </li>
@@ -43,7 +43,7 @@ const Header =() =>{
       <Link to='/offers'>
         <div className='flex items-center'>
           <img src={Offer} alt='Offer' className="svg-class" />
-          <span className="ml-3">Offer</span>
+          <span className="ml-3 hidden md:block">Offer</span>
         </div>
       </Link>
       </li>
@@ -52,14 +52,14 @@ const Header =() =>{
       <Link to='/profile'>
         <div className='flex items-center'>
           <img src={SignIn} alt='Signin' />
-          <span className="ml-3">{userData?userData?.name:user?.name}</span>
+          <span className="ml-3 hidden md:block">{userData?userData?.name:user?.name}</span>
         </div>
       </Link>
       :
       <Link to='/login'>
          <div className='flex items-center'>
           <img src={SignIn} alt='Signin' />
-          <span className="ml-3">Login</span>
+          <span className="ml-3 hidden md:block">Login</span>
         </div>
       </Link>
 }
@@ -69,10 +69,10 @@ const Header =() =>{
       {length === 0 ?
         <div className='flex items-center'>
           <img src={EmptyCart} alt='Offer' />
-          <span className="ml-3">Cart</span>
+          <span className="ml-3 hidden md:block">Cart</span>
           <span
                     style={{ color: "#686b78" }}
-                    className="flex justify-center items-center min-w-[18px]  text-sm text-center  relative -top-[1.5px] right-[62px]"
+                    className="flex justify-center items-center min-w-[18px]  text-sm text-center right-[18px] relative md:-top-[1.5px] md:right-[62px]"
                   >
                     0
                   </span>
