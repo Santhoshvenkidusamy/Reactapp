@@ -8,13 +8,13 @@ class ProfileClass extends Component{
                 avatar_url:'dummy',
             }
         }
-        // console.log('child-cons')
+       
     }
 
     async componentDidMount() {
         const data = await fetch('https://corsproxy.io/?https://api.github.com/users/Santhoshvenkidusamy')
         const json = await data.json()
-        // console.log('child-didmount')
+       
         this.setState({userInfo:json});
     }
 
@@ -26,7 +26,7 @@ class ProfileClass extends Component{
         
     }
     render(){
-        // console.log('child-render');
+        
         return(
         <>
             <div>{this?.state?.userInfo?.login}</div>

@@ -23,12 +23,12 @@ const responsive = {
   },
   mobile: {
     breakpoint: { max: 1180, min: 1077 },
-    items: 2,
+    items: 0,
     partialVisibilityGutter: 40,
   },
   small: {
     breakpoint: { max: 1076, min: 1024 },
-    items: 2,
+    items: 0,
     partialVisibilityGutter: 20,
   },
 };

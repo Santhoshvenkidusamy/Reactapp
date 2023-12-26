@@ -27,7 +27,7 @@ const RestaurantMenuItem = ({data}) =>{
   const dispatch = useDispatch();
   // Dispatch an action
   const handleAddItem = (item) => {
-    console.log(item);
+   
     dispatch(addItem({ ...item, inStock: 1 }));
   };
     return(

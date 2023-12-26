@@ -34,7 +34,7 @@ const responsive = {
 };
 
 const MenuCarousel = ({data}) => {
-    console.log(data);
+   
   const handleClick = () => {
     const targetSection = document.getElementById("visible-parts");
     var interval = setInterval(function () {

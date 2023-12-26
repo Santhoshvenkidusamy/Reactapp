@@ -13,10 +13,10 @@ const Search = () =>{
     useEffect(() => {
         const getSuggestions = async () => {
           const data = await fetch(
-            `https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/search/suggest?lat=13.061436790959643&lng=80.24084452539682&trackingId=undefined&str=${value}`
+            'https://corsproxy.org/?' + encodeURIComponent(`https://www.swiggy.com/dapi/restaurants/search/suggest?lat=13.061436790959643&lng=80.24084452539682&trackingId=undefined&str=${value}`)
           );
           const json = await data.json();
-          console.log(json);
+        
            setSuggestions(
             json?.data?.suggestions.filter((sug) => sug.type === "RESTAURANT")
           );
@@ -33,20 +33,20 @@ const Search = () =>{
 
       const navigate = useNavigate();
       const getRestInfo = (metaData) => {
-        console.log(metaData);
+       
         const data = JSON.parse(metaData);
         const id = data?.data?.primaryRestaurantId;
       
         navigate(`/restaurant/${id}`);
-        console.log(id);
+        
       };
 
       const getRestaurants = async () => {
         const data = await fetch(
-          "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+          'https://corsproxy.org/?' + encodeURIComponent("https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
         );
         const json = await data.json();
-        console.log(json);
+       
     
         json.data.cards.map((items) => {
           if(items.card.card.id === "whats_on_your_mind"){

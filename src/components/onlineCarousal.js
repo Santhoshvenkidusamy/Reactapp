@@ -26,7 +26,7 @@ const responsive = {
   },
   mobile: {
     breakpoint: { max: 1180, min: 1077 },
-    items: 2,
+    items: 1,
     partialVisibilityGutter: 40,
   },
   small: {
@@ -54,11 +54,13 @@ const OnlineCarousal = ({data}) => {
           infinite={true}
           partialVisible={true}
         >
-          {data?.map((item) => {
+          {data?.map((item,index) => {
             return (
+              <div key={index}>
                 <Link to={`restaurant/${item?.info?.id}`}>
                 <OnlineRestrauntCard {...item?.info} key={item?.info?.id} />
               </Link>
+              </div>
             );
           })}
         </Carousel>

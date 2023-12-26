@@ -46,12 +46,10 @@ const appRouter = createBrowserRouter([
       {
         path:'/about',
         element:<Suspense><About /></Suspense>,
-        children:[
-          {
-            path:'profile',
-            element:<Profile />,
-          }
-        ]
+      },
+      {
+        path:'/profile',
+        element:<Profile />,
       },
       {
         path:'/contact',

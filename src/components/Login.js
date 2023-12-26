@@ -10,12 +10,12 @@ const Login = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const user = JSON.parse(localStorage.getItem('user'))
-    // console.log(user.name);
+    
     const handleClick = () =>{
     event.preventDefault();
     if(user){
    if(user.name !== name){
-    console.log(user.name);
+   
        toast.error('User Not Found . Please sign up again');
    }
    else if(user.password !== password){

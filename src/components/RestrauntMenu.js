@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import {ImageSwiggy, appLogo} from '../components/constants';
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate} from "react-router-dom";
 import useRestrauntMenu from "../utils/useRestrauntMenu";
 import RestaurantMenuItem from "./RestrauntMenuItem";
 import Shimmer from "./Shimmer";
@@ -10,14 +10,17 @@ import rupee from '../Images/rupee.svg'
 import RestaurantCategory from "./Category";
 import MenuCarousel from "./MenuCarousel";
 import location from '../Images/location.png'
+import NestedCategory from "./NestedCategory";
 
 const RestaurantMenu = () =>{
+  
   const {id} = useParams();
+    const navigate = useNavigate()
     const menu = useRestrauntMenu(id);
     if (menu === null) {
         return <Shimmer />;
       }
-   console.log(menu);
+   
 
     const categories = menu?.data?.cards
     ?.filter((y) => y?.groupedCard)
@@ -28,6 +31,18 @@ const RestaurantMenu = () =>{
           "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
       );
     });
+
+    const nestedCategories = menu?.data?.cards
+    ?.filter((y) => y?.groupedCard)
+    ?.map((z) => {
+      return z?.groupedCard?.cardGroupMap?.REGULAR?.cards?.filter(
+        (a) =>
+          a?.card?.card?.["@type"] ===
+          "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory" 
+      );
+    });
+
+   
      let carousel = [];
     carousel = menu?.data?.cards
     ?.filter((y) => y?.groupedCard)
@@ -60,10 +75,10 @@ const RestaurantMenu = () =>{
       );
     });
 
-  if (!categories) {
-    return window.location.reload();
-  }
-    console.log(carousel);
+  // if (!categories) {
+  //   return window.location.reload();
+  // }
+   
     const offers = menu?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.offers;
     const {
         name,
@@ -79,18 +94,17 @@ const RestaurantMenu = () =>{
     return(
         (menu?.length===0? (<Shimmer />):
        ( <div className='flex justify-center'>
-            <div className="flex flex-col w-[90%] md:w-[65%] lg:w-[65%] xl:w-[65%] p-3 items-between">
+            <div className="flex flex-col w-[90%] md:w-[65%]  p-3 items-between">
             <div className="mt-2 mb-6">
-          <Link
+          <button
             onClick={() => navigate(-1)}
             className="border p-2 border-red-400 rounded-md font-bold text-md"
           >
             BACK
-          </Link>
+          </button>
           </div>
           <div>
           <div className="flex justify-between">
-            {/* Restaurants Name, Cuisines and Area Name */}
             <div>
               <p
                 style={{ color: "#282C3F" }}
@@ -189,6 +203,14 @@ const RestaurantMenu = () =>{
            { categories[0]?.map((category,index) =>{
               return (
               <RestaurantCategory
+              key={index}
+              category={category}
+            />
+           )})
+        }
+        { nestedCategories[0]?.map((category,index) =>{
+              return (
+              <NestedCategory
               key={index}
               category={category}
             />

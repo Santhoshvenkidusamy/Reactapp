@@ -8,7 +8,10 @@ import OnlineCarousal from './onlineCarousal';
 import Spin from './Spin';
 import Shimmer from './Shimmer';
 import Footer from './Footer';
+import useWindowSize from '../utils/useWindowSize';
 const Body = () => {
+  const size = useWindowSize()
+  
   useEffect(() => {
     // API call
     getRestaurants();
@@ -17,10 +20,9 @@ const Body = () => {
   const getRestaurants = async () => {
     setLoading(true);
     const data = await fetch(
-      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      'https://corsproxy.org/?' + encodeURIComponent("https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
     );
     const json = await data.json();
-    // console.log(json);
   const relevantData = json.data.cards.find(
     (items) =>
       items?.card?.card?.id === 'top_brands_for_you' ||
@@ -63,19 +65,33 @@ const Body = () => {
   const [filteredRestaurant, setFilteredRestaurant] = useState([]);
   const [carousel, setCarousel] = useState([]);
   const [smallCarousel, setSmallCarousel] = useState([]);
-  // console.log(filteredRestaurant);
 
   return (
         loading ? [<Spin />,<Shimmer />] :
         <div className=''>
           <div className='m-4 mt-10'>
-          { carousel.length > 0 &&(
-            <Carousell data={carousel}/>)}
+          { carousel.length > 0 && size?.width>=1175 &&(
+            <div >
+            <Carousell data={carousel}/>
             <div className="mt-20 border mx-10"></div>
-            { smallCarousel.length > 0 &&(
-            <SmallCarosuel data={smallCarousel}/>)}
+            </div>
+            )}
+            {size?.width<1175 &&(
+            <div className="flex justify-center  lg:h-0 overflow-hidden" >
+        <img
+          className="w-[90%]"
+          src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/rng/md/carousel/production/faxdufvkcllzse67eqry"
+          alt="home-carousel"
+        />
+      </div>
+            )}
+            { (smallCarousel.length > 0 && size?.width>=1000) &&(
+              <>
+            <SmallCarosuel data={smallCarousel}/>
             <div className="mt-20 border mx-10"></div>
-             { onlineDelivery.length > 0 &&(
+            </>
+            )}
+             { onlineDelivery.length > 0 && size?.width>=1000 &&(
             <OnlineCarousal data={onlineDelivery}/>)}
            <div className="flex justify-center mt-20" id="visible-part">
         <div className="flex flex-col justify-center w-[90%] ">

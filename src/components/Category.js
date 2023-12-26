@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import {FaAngleDown,FaAngleUp} from 'react-icons/fa';
 import ItemList from "./Itemslist";
 const RestaurantCategory = ({ category }) => {
+  
   const { title, itemCards } = category?.card?.card;
-
   const [showItem, setShowItem] = useState(false);
   if (!itemCards) {
     return null;
@@ -11,6 +11,7 @@ const RestaurantCategory = ({ category }) => {
 
   return (
     <div>
+
       <div
         id="visible-parts"
         className="flex justify-between my-4 p-3 hover:cursor-pointer"

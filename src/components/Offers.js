@@ -15,10 +15,10 @@ const Offers = ()=>{
       const getRestaurants = async () => {
         setLoading(true);
         const data = await fetch(
-          "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+          'https://corsproxy.org/?' + encodeURIComponent("https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
         );
         const json = await data.json();
-        console.log(json);
+       
       const relevantData = json.data.cards.find(
         (items) =>
           items?.card?.card?.id === 'top_brands_for_you' ||
