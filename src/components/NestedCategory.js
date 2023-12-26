@@ -21,7 +21,7 @@ const NestedCategory = ({category}) => {
         className="flex justify-between my-4 p-3 hover:cursor-pointer"
         onClick={()=>setShowItem(!showItem)}
       >
-        <span style={{ color: "#3E4152" }} className="text-lg">
+        <span style={{ color: "#3E4152" }} className="font-semibold">
           {categories?.title} ({categories?.itemCards?.length})
         </span>
         <span>{showItem ? <FaAngleUp /> : <FaAngleDown />}</span>

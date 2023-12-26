@@ -4,7 +4,7 @@ import ItemList from "./Itemslist";
 const RestaurantCategory = ({ category }) => {
   
   const { title, itemCards } = category?.card?.card;
-  const [showItem, setShowItem] = useState(false);
+  const [showItem, setShowItem] = useState(true);
   if (!itemCards) {
     return null;
   }

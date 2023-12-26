@@ -13,7 +13,6 @@ import location from '../Images/location.png'
 import NestedCategory from "./NestedCategory";
 
 const RestaurantMenu = () =>{
-  
   const {id} = useParams();
     const navigate = useNavigate()
     const menu = useRestrauntMenu(id);
@@ -54,6 +53,12 @@ const RestaurantMenu = () =>{
       );
     });
 
+    const restaurantData = menu?.data?.cards?.filter(
+      (y) =>
+        y?.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.Restaurant"
+    );
+
     const license = menu?.data?.cards
     ?.filter((y) => y?.groupedCard)
     ?.map((z) => {
@@ -88,10 +93,11 @@ const RestaurantMenu = () =>{
         labels,
         sla,
         costForTwoMessage,
-      } = menu?.data?.cards[0]?.card?.card?.info;
+      } = restaurantData[0]?.card?.card?.info;
+     
       const { message } = labels[2];
       const { lastMileTravelString,deliveryTime } = sla;
-    return(
+         return(
         (menu?.length===0? (<Shimmer />):
        ( <div className='flex justify-center'>
             <div className="flex flex-col w-[90%] md:w-[65%]  p-3 items-between">
@@ -171,7 +177,7 @@ const RestaurantMenu = () =>{
           </div>
             <div>
             <div className="flex overflow-x-auto">
-            {offers.map((offer, index) => (
+            {offers?.map((offer, index) => (
               <div
                 className="border min-w-[15rem] h-16 rounded-lg mr-4 text-center flex justify-center items-center"
                 key={index}
@@ -195,10 +201,10 @@ const RestaurantMenu = () =>{
           </div>
           <div className="mt-6 border"></div>
           {carousel.length > 0 && carousel[0].length> 0 && 
-          <>
+          <div className="hidden md:block">
            <MenuCarousel data={carousel}/>
            <div className="mt-12 border"></div>
-           </>
+           </div>
            }
            { categories[0]?.map((category,index) =>{
               return (

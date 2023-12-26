@@ -80,10 +80,10 @@ const Header =() =>{
         :
         <div className='flex items-center'>
           <img src={cart} alt='Offer' />
-          <span className="ml-3">Cart</span>
+          <span className="ml-3 hidden md:block">Cart</span>
           <span
                     // style={{ color: "#686b78" }}
-                    className="flex justify-center items-center min-w-[18px]  text-sm text-center  relative -top-[1.5px] right-[62px]"
+                    className="flex justify-center items-center min-w-[18px]  text-sm text-center  right-[18px] relative md:-top-[1.5px] md:right-[62px]"
                   >
                     {length}
                   </span>
