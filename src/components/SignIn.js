@@ -1,27 +1,44 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
+import { addUser } from "../utils/userSlice";
+import { auth } from "../utils/FireBase";
+import { useDispatch } from "react-redux";
 const SignIn = () => {
     const navigate = useNavigate()
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [address, setAddress] = useState("");
-    const [signingUp, setSigningUp] = useState(false);
-    const handleSubmit = () =>{
-        const user = {
-            name: name,
-            email: email,
-            password: password,
-            address: address,
-          };
-        
-          // Convert the user object to a JSON string and store it in local storage
-          localStorage.setItem("user", JSON.stringify(user));
-        navigate('/login')
-        toast.success('Credentials saved succesfully');
-    }
+    const dispatch = useDispatch()
+    const name = useRef(null)
+    const email = useRef(null)
+    const password = useRef(null)
+    const address = useRef(null)
+    const [errorMessage,setErrorMessage] = useState('');
+    const handleSubmit = (e) =>{
+      e.preventDefault()
+      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+     .then((userCredential) => {
+         const user = userCredential.user;
+         updateProfile(user, {
+          displayName: name.current.value,
+          photoURL: address.current.value
+        }).then(() => {
+          const {displayName, photoURL, email} = auth.currentUser;
+          dispatch(addUser({
+            name:displayName,
+            address:photoURL,
+            email:email,
+          }))
+        }).catch((error) => {
+         setErrorMessage(error)
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setErrorMessage(errorMessage)
+    })
+  }
     return (
       <div className="w-full h-[90%] flex items-center justify-center mt-10">
         <div className="w-[80%] mx-auto">
@@ -45,7 +62,7 @@ const SignIn = () => {
             />
           </div>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={(e)=>handleSubmit(e)}>
           <div className="flex flex-col items-center">
           
             <input
@@ -53,16 +70,18 @@ const SignIn = () => {
              placeholder="Name"
              type='text'
              required
-             onChange={(e)=>setName(e.target.value)}
-             value={name}
+             
+             ref={name}
+             
              />
             <input 
             className="border w-[50%] md:w-[50%] sm:w-[70%]  mx-auto p-3 my-2 outline-none" 
             placeholder="Email"
             type='email'
             required
-            onChange={(e)=>setEmail(e.target.value)}
-            value={email}
+            
+            ref={email}
+           
             
             />
             <input
@@ -70,17 +89,17 @@ const SignIn = () => {
              placeholder="Password"
              type='password'
              required
-             onChange={(e)=>setPassword(e.target.value)}
-             value={password}
+             ref={password}
+            
              />
             <input 
             className="border w-[50%] md:w-[50%] sm:w-[70%]  mx-auto p-3 my-2 outline-none"
             placeholder="Address"
             type='text'
             required
-            onChange={(e)=>setAddress(e.target.value)}
-            value={address}
+            ref={address}
              />
+             <span className='text-red-700 font-bold'>{errorMessage}</span>
             <button style={{ backgroundColor: "#FC8019" }}
               className="text-white p-3 text-lg font-bold  w-[50%] md:w-[50%] sm:w-[70%] ">Sign Up</button>
               

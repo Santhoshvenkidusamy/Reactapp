@@ -7,14 +7,9 @@ const cartSlice = createSlice({
     },
     reducers:{
       addItem: (state, action) => {
-        // const itemIndex = state.items.findIndex(
-        //   (item) => item.card.info.id === action.payload.card.info.id
-        // );
-        // if (itemIndex < 0) {
+        
           state.items.push(action.payload);
-        // } else {
-        //   state.items[itemIndex].inStock = state.items[itemIndex].inStock + 1;
-        // }
+       
       },
       removeItem: (state) => {
         state.items.pop();

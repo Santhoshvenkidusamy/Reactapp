@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import appLogo from '../Images/logo.svg';
 import  Offer  from "../Images/offers.svg";
 import  Search  from "../Images/search.svg";
@@ -6,14 +6,31 @@ import cart from "../Images/cart2.svg";
 import  SignIn  from "../Images/signin.svg";
 import  EmptyCart  from "../Images/cart.svg";
 import  NonEmptyCart  from "../Images/cart2.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import store from "../utils/store";
-
+import { onAuthStateChanged } from "firebase/auth";
+import {auth} from '../utils/FireBase'
+import { addUser, removeUser } from "../utils/userSlice";
 
 const Header =() =>{
- 
-    const userData = useSelector((store) => store.user.items[0])
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(()=>{
+   const unsubscribe = onAuthStateChanged(auth, (user) => {
+     if (user) {
+       const {photoURL, email, displayName } = user;
+       dispatch(addUser({ email:email,name:displayName,address:photoURL }))
+       navigate('/')
+     } else {
+       
+       dispatch(removeUser());
+       
+     }
+   });
+  return () => unsubscribe();
+  },[])
+    const userData = useSelector((store) => store.user)
      const user = JSON.parse(localStorage.getItem('user'))
      const loggedIn = JSON.parse(localStorage.getItem('login'))
   
@@ -48,11 +65,11 @@ const Header =() =>{
       </Link>
       </li>
       <li className='px-4 flex flex-row items-center'>
-  {loggedIn || userData?.loggedIn?
+  {userData ?
       <Link to='/profile'>
         <div className='flex items-center'>
           <img src={SignIn} alt='Signin' />
-          <span className="ml-3 hidden md:block">{userData?userData?.name:user?.name}</span>
+          <span className="ml-3 hidden md:block">{userData?.name}</span>
         </div>
       </Link>
       :

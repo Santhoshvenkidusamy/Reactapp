@@ -12,7 +12,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userData = useSelector((store) => store.user.items[0])
+  const userData = useSelector((store) => store.user)
   const user = JSON.parse(localStorage.getItem('user'))
   const loggedIn = JSON.parse(localStorage.getItem('login'))
 
@@ -87,7 +87,7 @@ const Cart = () => {
       <div className="flex flex-col md:flex-row md:justify-between md:p-4 lg:p-8">
         {/* left section - account details */}
         <div className=" flex flex-col  md:w-[55%] md:h-auto lg:w-[67%] lg:h-auto">
-          {userData?.loggedIn || loggedIn ? (
+          {userData ? (
             <div className="bg-white p-10 mb-3">
               <div style={{ color: "#282C3F" }} className="text-lg font-bold">
                 Logged in &nbsp; &nbsp; ✅
@@ -96,7 +96,7 @@ const Cart = () => {
                 style={{ color: "#282C3F" }}
                 className="text-lg font-medium mt-4"
               >
-                {userData?userData?.name:user?.name}
+                {userData?.name}
               </div>
             </div>
           ) : (
@@ -149,7 +149,7 @@ const Cart = () => {
               </div>
             </div>
           )}
-          {userData?.loggedIn || loggedIn ?(
+          {userData ?(
             <div className="bg-white p-10 mb-3">
               <div style={{ color: "#282C3F" }} className="text-lg font-bold">
                 Select delivery address
@@ -176,7 +176,7 @@ const Cart = () => {
                     Home
                   </div>
                   <div style={{ color: "#93959F" }} className="text-sm my-4">
-                    {userData?userData.address:user?.address}
+                    {userData?.address}
                   </div>
                   {tick ? (
                     <div className="flex items-center">
@@ -244,9 +244,9 @@ const Cart = () => {
                 </p>
               </div>
             </div>
-            {/* Items */}
+            
             <div className="flex flex-col overflow-y-auto h-72 px-3">
-              {/* Items details */}
+              
               <div className="item-details">
                 {cartItems.map((item, index) => (
                   <div className="flex items-center" key={index}>
@@ -300,7 +300,7 @@ const Cart = () => {
                   </div>
                 ))}
               </div>
-              {/* Instructions Input */}
+              
               <div className="my-4 mr-2">
                 <input
                   style={{ backgroundColor: "#F2F2F2" }}
@@ -309,7 +309,7 @@ const Cart = () => {
                   placeholder="Any suggestions? We will pass it on..."
                 />
               </div>
-              {/* No-Contact Delivery */}
+              
               <div className="border flex px-3 py-1 mr-1">
                 <div className="mr-3">
                   <input type="checkbox" className="" onChange={handleChange} />
@@ -334,9 +334,9 @@ const Cart = () => {
                     </div>
                   )}
                 </div>
-                {/* {input.?[checked] ? (<h1>hello</h1>) : (<h1>hi</h1>)} */}
+               
               </div>
-              {/* Bill Details */}
+              
               <div className="flex flex-col mr-2">
                 <div style={{ color: "#282C3F" }} className="text-sm mt-3">
                   Bill Details
@@ -407,7 +407,7 @@ const Cart = () => {
           </div>
           {/* Proceed to pay */}
           <div className="flex justify-end">
-          {userData?.loggedIn || loggedIn ?(
+          {userData?(
               <Link
                 to="/success"
                 style={{ backgroundColor: "#7BBB64" }}

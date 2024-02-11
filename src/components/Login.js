@@ -1,42 +1,29 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { addUser } from '../utils/userSlice';
+import {signInWithEmailAndPassword } from "firebase/auth";
+import {auth} from '../utils/FireBase'
 
 const Login = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [name, setName] = useState("");
+    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const user = JSON.parse(localStorage.getItem('user'))
+    const [errorMessage,setErrorMessage]= useState('');
+    
     
     const handleClick = () =>{
     event.preventDefault();
-    if(user){
-   if(user.name !== name){
-   
-       toast.error('User Not Found . Please sign up again');
-   }
-   else if(user.password !== password){
-    toast.error('Incorrect Password');
-   }
-   else if(user?.name === name && user?.password === password){
-    toast.success('Login Successfull')
-    navigate('/cart');
-    localStorage.setItem('login',true);
-    const user = JSON.parse(localStorage.getItem('user'))
-    const loggedIn = JSON.parse(localStorage.getItem('login'))
-    dispatch(addUser({...user,loggedIn}))
-   }
-   else{
-    toast.error('Something Went Wrong. Please Sign Up again!')
-   }
-}
-   else{
-    toast.error('No Credentials Found. Please Sign Up!')
-    navigate('/signin');
-   }
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+          const user = userCredential.user;
+          navigate('/')
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    setErrorMessage(errorMessage)
+  });
+  
     }
     return (
       <div className="w-full h-[90%] flex items-center justify-center mt-10">
@@ -65,11 +52,11 @@ const Login = () => {
           <div className="flex flex-col items-center">
             <input 
             className="p-3 w-[50%] md:w-[50%] sm:w-[70%] mx-auto outline-none border rounded"
-              type='text'
-              placeholder="Name"
-              value={name}
+              type='email'
+              placeholder="E-mail"
+              value={email}
               required
-              onChange={(e)=>setName(e.target.value)}
+              onChange={(e)=>setEmail(e.target.value)}
               />
             <input
              className="border w-[50%] md:w-[50%] sm:w-[70%]  mx-auto p-3 my-4 outline-none"
@@ -79,6 +66,7 @@ const Login = () => {
              required
              onChange={(e)=>setPassword(e.target.value)}
              />
+             <span className='text-red-700 font-bold'>{errorMessage}</span>
             <button style={{ backgroundColor: "#FC8019" }}
               className="text-white p-3 text-lg font-bold  w-[50%] md:w-[50%] sm:w-[70%] ">Login</button>
               <p className="text-xs  mt-2">
