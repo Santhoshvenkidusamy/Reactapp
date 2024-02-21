@@ -84,7 +84,7 @@ const RestaurantMenu = () =>{
   //   return window.location.reload();
   // }
    
-    const offers = menu?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.offers;
+    const offers = menu?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers;
     const {
         name,
         areaName,
