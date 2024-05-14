@@ -20,7 +20,7 @@ const Body = () => {
   const getRestaurants = async () => {
     setLoading(true);
     const data = await fetch(
-      "https://thingproxy.freeboard.io/fetch/"+"https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      (" https://thingproxy.freeboard.io/fetch/" + encodeURIComponent("https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"))
     );
     const json = await data.json();
   const relevantData = json.data.cards.find(
