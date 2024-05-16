@@ -54,14 +54,14 @@ const RestaurantMenuItem = ({data}) =>{
             {data?.card?.info?.imageId?
           <img className="h-24 rounded-lg"
                 src={
-                    "https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" +
+                    "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/" +
                     data?.card?.info?.imageId
                 }
             />
             :
             <img
               className="h-24 rounded-lg"
-              src={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill//e7f40335a66b230f5eda766022dfecbd"}
+              src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/e7f40335a66b230f5eda766022dfecbd"}
               alt="item"
             />
               }

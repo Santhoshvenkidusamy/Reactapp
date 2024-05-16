@@ -5,7 +5,7 @@ const useRestrauntMenu = (id) =>{
         getMenuItem();
     },[])
     const getMenuItem = async() =>{
-        const data = await fetch('https://corsproxy.org/?' + encodeURIComponent(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=13.061436790959643&lng=80.24084452539682&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`));
+        const data = await fetch(`${process.env.REACT_APP_URL}/api/restaurantMenu/${id}`);
         const json = await data.json();
        
         setMenu(json);

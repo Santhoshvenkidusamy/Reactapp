@@ -20,14 +20,8 @@ const Body = () => {
   const getRestaurants = async () => {
     setLoading(true);
     const data = await fetch(
-      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING", {
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-        
-        }
-      });
+      `${process.env.REACT_APP_URL}/api/restaurants`
+    );
     const json = await data.json();
   const relevantData = json.data.cards.find(
     (items) =>

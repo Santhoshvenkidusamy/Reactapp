@@ -13,7 +13,7 @@ const Search = () =>{
     useEffect(() => {
         const getSuggestions = async () => {
           const data = await fetch(
-            'https://corsproxy.org/?' + encodeURIComponent(`https://www.swiggy.com/dapi/restaurants/search/suggest?lat=13.061436790959643&lng=80.24084452539682&trackingId=undefined&str=${value}`)
+            `${process.env.REACT_APP_URL}/api/search/${value}`
           );
           const json = await data.json();
         
@@ -43,7 +43,7 @@ const Search = () =>{
 
       const getRestaurants = async () => {
         const data = await fetch(
-          'https://corsproxy.org/?' + encodeURIComponent("https://www.swiggy.com/dapi/restaurants/list/v5?lat=13.0614369&lng=80.2408444&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+          `${process.env.REACT_APP_URL}/api/restaurants`
         );
         const json = await data.json();
        
