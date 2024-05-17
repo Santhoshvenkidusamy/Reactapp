@@ -5,30 +5,33 @@ import { ImageSwiggy } from "./constants";
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 1440 },
-    items: 2,
+    items: 4,
     partialVisibilityGutter: 200,
-
   },
   desktop: {
     breakpoint: { max: 1439, min: 1261 },
-    items: 2,
+    items: 4,
     partialVisibilityGutter: 120,
   },
   large: {
     breakpoint: { max: 1260, min: 1181 },
-    items: 2,
+    items: 4,
     partialVisibilityGutter: 80,
   },
+  tablet: {
+    breakpoint: { max: 1180, min: 1025 },
+    items: 3,
+    partialVisibilityGutter: 60,
+  },
   mobile: {
-    breakpoint: { max: 1180, min: 1077 },
-    items: 0,
+    breakpoint: { max: 1024, min: 768 },
+    items: 2,
     partialVisibilityGutter: 40,
   },
-  small: {
-    breakpoint: { max: 1076, min: 1024 },
-    items: 0,
+  smallMobile: {
+    breakpoint: { max: 767, min: 0 },
+    items: 1,
     partialVisibilityGutter: 20,
   },
 };
