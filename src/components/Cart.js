@@ -228,7 +228,7 @@ const Cart = () => {
             <div className="flex mb-6">
               <div className="w-14 h-14 mr-4">
                 <img
-                  src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_100,h_100,c_fill/Image-login_btpq7r"
+                  src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_100,h_100,c_fill/Image-login_btpq7r"
                   alt="restaurant"
                 />
               </div>

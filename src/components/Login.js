@@ -42,7 +42,7 @@ const Login = () => {
           <div>
             <img
               className="w-[100px] h-[105px]"
-              src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_100,h_100,c_fill/Image-login_btpq7r"
+              src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_100,h_100,c_fill/Image-login_btpq7r"
               alt="cart"
             />
           </div>
