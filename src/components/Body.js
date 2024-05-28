@@ -17,6 +17,21 @@ const Body = () => {
     getRestaurants();
   }, []);
 
+  const handleClick = () => {
+    const targetSection = document.getElementById("visible-part");
+    var interval = setInterval(function () {
+      var targetSectionCoordinates = targetSection.getBoundingClientRect();
+      if (
+        targetSectionCoordinates.top >= 0 &&
+        targetSectionCoordinates.top <= 20
+      ) {
+        clearInterval(interval);
+        return;
+      }
+      window.scrollBy(0, 5);
+    }, 2);
+  };
+
   const getRestaurants = async () => {
     setLoading(true);
     const data = await fetch(
@@ -77,10 +92,10 @@ const Body = () => {
             </div>
             )}
             {size?.width<1175 &&(
-            <div className="flex justify-center  lg:h-0 overflow-hidden" >
+            <div className="flex justify-center  lg:h-0 overflow-hidden cursor-pointer" onClick={handleClick} >
         <img
           className="w-[90%]"
-          src="https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/rng/md/carousel/production/faxdufvkcllzse67eqry"
+          src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/rng/md/carousel/production/faxdufvkcllzse67eqry"
           alt="home-carousel"
         />
       </div>

@@ -65,7 +65,7 @@ const Search = () =>{
             />
             </div>
             <div>
-            {suggestions ?
+            {suggestions && value ?
                 suggestions.map((suggestions,index)=>(
                <div key={index}
                 className='cursor-pointer flex ml-4 my-4'
